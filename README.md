@@ -16,7 +16,7 @@ AutoSPM is a specialized application aimed at streamlining the procurement proce
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/YourUsername/AutoPM.git
+    git clone https://github.com/nyx-ei/autospm.git
     ```
     
 2. Navigate to the project directory:
@@ -72,7 +72,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-For support or queries, feel free to reach out to us at support@autopm.com.
+For support or queries, feel free to reach out to us at help@nyx-ei.tech.
 
 ---
 
