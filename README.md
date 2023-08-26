@@ -21,7 +21,7 @@ AutoSPM is a specialized application aimed at streamlining the procurement proce
     
 2. Navigate to the project directory:
     ```bash
-    cd AutoPM
+    cd AutoSPM
     ```
 
 3. Restore NuGet packages:
