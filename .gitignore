@@ -1,0 +1,34 @@
+## Build Artifacts ##
+[Bb]in/
+[Oo]bj/
+[Tt]arget/
+
+## Packages ##
+# NuGet packages directory
+packages/
+
+## User-Specific ##
+*.user
+*.suo
+*.userprefs
+*.sln.docstates
+
+## IDE - Visual Studio ##
+.vs/
+.idea/
+*.sln.ide/
+
+## RIDER ##
+.idea/
+
+## Temporary Files ##
+*.bak
+*.cache
+*.swp
+*.log
+
+## Other ##
+.DS_Store
+*.pfx
+*.publishsettings
+appsettings.*.json

@@ -79,3 +79,18 @@ For support or queries, feel free to reach out to us at help@nyx-ei.tech.
 For any queries or support, please reach out to us at help@nyx-ei.tech
 
 ---
+# Code conventions
+## Namespaces
+The universal namespace prefix is AutoSPM. For every class the namespace should respect this structure:
+```
+AutoSPM.funder.feature-family.feature.service
+```
+- **funder** is the funding organisation: WorldBank, African Bank for Development, ...
+- **feature-family** is related to how the feature was designed.
+- **feature** is the feature associated to your service.
+- **service** is the service associated to your class.
+
+_If you have any question related to namespaces convention, feel free to reach out to us at help@nyx-ei.tech._
+
+---
+# Architecture
