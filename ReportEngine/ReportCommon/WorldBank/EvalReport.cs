@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReportCommon
+namespace ReportCommon.WorldBank
 {
-    public class WBProposal
+    public class EvalReport
     {
     }
 }

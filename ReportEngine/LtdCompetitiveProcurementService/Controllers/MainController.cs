@@ -15,7 +15,7 @@ namespace AutoSPM.WB.Report.LtdCompetitiveProcurementService.Controllers
         }
 
         [HttpGet(Name = "GetProposals")]
-        public IEnumerable<WBProposal> Get()
+        public IEnumerable<Proposal> Get()
         {
             return null;
         }
