@@ -7,7 +7,7 @@ namespace ReportCommon.WorldBank
    public  class AvisAttribution
     {
         public int NumAvisAttribution { get; set; }
-        public string IntituléAttribution { get; set; }
+        public string IntituleAttribution { get; set; }
         public DateTime DateParution { get; set; }
         public DateTime DateCloture { get; set; }
     }
