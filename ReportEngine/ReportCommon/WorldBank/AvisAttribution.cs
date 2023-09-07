@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReportCommon.WorldBank
 {
-   public  class AvisAttribution
+   public class AvisAttribution
     {
         public int NumAvisAttribution { get; set; }
         public string IntituleAttribution { get; set; }

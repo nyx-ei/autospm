@@ -4,9 +4,10 @@ using System.Text;
 
 namespace ReportCommon.WorldBank
 {
-    public class Services
+    public class Marche
     {
-        public int ServiceId { get; set; }
-        public string TypeService { get; set; }
+        public int MarcheId { get; set; }
+        public string IntituleMarche { get; set; }
+
     }
 }

@@ -4,11 +4,10 @@ using System.Text;
 
 namespace ReportCommon.WorldBank
 {
-    public class Soumissionnaire
+   public class SoumissionMarche
     {
         public int SoumissionnaireId { get; set; }
-        public string RaisonSociale { get; set; }
-        public string  Adresse { get; set; }
-       
+        public int MarcheId { get; set; }
+        public DateTime DateSoumission { get; set; }
     }
 }
