@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ReportCommon;
+using ReportCommon.WorldBank;
 
 namespace AutoSPM.WB.Report.LtdCompetitiveProcurementService.Controllers
 {
