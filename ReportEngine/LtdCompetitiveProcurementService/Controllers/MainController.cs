@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ReportCommon;
+using ReportCommon.WorldBank;
 
 namespace AutoSPM.WB.Report.LtdCompetitiveProcurementService.Controllers
 {
@@ -15,7 +15,7 @@ namespace AutoSPM.WB.Report.LtdCompetitiveProcurementService.Controllers
         }
 
         [HttpGet(Name = "GetProposals")]
-        public IEnumerable<WBProposal> Get()
+        public IEnumerable<Proposal> Get()
         {
             return null;
         }
