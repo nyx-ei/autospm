@@ -7,7 +7,7 @@ namespace ReportCommon.ProcurementPlan
     public class IndependantEstimate
     {
         public string ResponsibleForEstimate { get; set; }
-        public string TheProcess { get; set; }
-        public string TheTimeline { get; set; }
+        public string Process { get; set; }
+        public string Timeline { get; set; }
     }
 }

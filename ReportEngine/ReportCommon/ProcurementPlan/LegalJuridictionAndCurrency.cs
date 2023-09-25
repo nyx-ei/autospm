@@ -8,6 +8,6 @@ namespace ReportCommon.ProcurementPlan
     {
         Euro,
         USD,
-        FCFA
+        XAF
     }
 }
