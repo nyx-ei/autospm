@@ -10,7 +10,7 @@ namespace ReportCommon.ProcurementPlanWB
         public string Country { get; set; }
         public string BorrowerRecipient { get; set; }
         public string ProjectName { get; set; }
-        public string ProjectSEARECC { get; set; }
+        public string ProjectSearecc { get; set; }
         public string ProjectImplementing { get; set; }
         public string Agency { get; set; }
         

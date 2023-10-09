@@ -4,13 +4,13 @@ using System.Text;
 
 namespace ReportCommon.ProcurementPlanWB
 {
-    public class PartOfProcurementplan
+    public class PartProcurementPlan
     {
-        public ProjectInformations projectinformation { get; set; }
+        public ProjectInformations projectInformation { get; set; }
         public string BanksapprovaldateofProcurementplan { get; set; }
         public string DateofGeneralProcurementNotice { get; set; }
         public DateTime Periodcoveredbythisprocurementplan { get; set; }
-        public WorksandGoodsandNonConsultantServices worksandGoodsandNonConsultantServices { get; set; }
-        public SelectionofConsultant selectionofConsultants { get; set; }
+        public WorksGoodsNonConsultantServices worksGoodsNonConsultantServices { get; set; }
+        public SelectionConsultant selectionConsultants { get; set; }
     }
 }
