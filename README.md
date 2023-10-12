@@ -1,8 +1,8 @@
-# AutoSPM: Automated Procurement Management
+# AutoPM: Automated Procurement Management
 
 ## Overview
 
-AutoSPM is a specialized application aimed at streamlining the procurement processes for funding agencies like the World Bank and African Development Bank (BAD), as well as State bodies. The core focus of AutoSPM is to deliver efficiency, fairness, and transparency in the procurement processes to ultimately achieve sustainable development and poverty reduction goals.
+AutoPM is a specialized application aimed at streamlining the procurement processes for funding agencies like the World Bank and African Development Bank (BAD), as well as State bodies. The core focus of AutoSPM is to deliver efficiency, fairness, and transparency in the procurement processes to ultimately achieve sustainable development and poverty reduction goals.
 
 ---
 
