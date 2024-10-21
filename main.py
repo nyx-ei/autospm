@@ -1,23 +1,42 @@
-from fastapi import FastAPI, HTTPException, status, Request
-from tortoise import models
-from tortoise.contrib.fastapi import register_tortoise
-from models import *
-from authentication import get_hashed_password, verify_token
+from fastapi import FastAPI, HTTPException, status, Request, Depends
 from fastapi.responses import HTMLResponse
-from email_view import send_email
+from models_validators.models import User
+from models_validators.validators import UserValidation
+from courriel.email_auth import get_hashed_password, verify_token
+
+from courriel.email_view import send_email
+from db.database import SessionLocal, engine, Base
+from typing import Annotated
+from sqlalchemy.orm import Session
+from sqlalchemy import select
+# templates
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+Base.metadata.create_all(bind=engine)
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+db_dependency = Annotated[Session, Depends(get_db)]
 
 
 @app.get('/')
 def index():
     return {"message": "Hellooooo"}
 
+
 # Route to register a user.
 @app.post('/registration')
-async def create_user(user: UserValidation):
+async def create_user(user: UserValidation, db: db_dependency):
     # Check if the user exist
-    if await User.get_or_none(username=user.username):
+    if db.scalar(select(User).where(User.username == user.username)):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"User with username: {user.username} already exists."
@@ -28,32 +47,39 @@ async def create_user(user: UserValidation):
     user.check_valid_phone_number()
 
     # Creation of an unverified user in the database
-    user_info = user.dict(exclude_unset=True)
-    user_info['password'] = get_hashed_password(user_info['password'])
-    user_obj = await User.create(**user_info)
-    new_user = await user_pydantic.from_tortoise_orm(user_obj)
+    user_obj = User(
+        username=user.username,
+        email=user.email,
+        password=get_hashed_password(user.password),
+        name=user.name,
+        firstname=user.firstname,
+        date_of_birth=user.date_of_birth,
+        phone_number=user.phone_number,
+        address=user.address,
+        is_verified=False
+    )
+    db.add(user_obj)
+    db.commit()
 
     # Send confirmation email
     await send_email([user_obj.email], user_obj)
 
     return {
         "status": "Ok",
-        "data": f"Hello {new_user.username}, thanks for choosing our services. Please check your email inbox and "
+        "data": f"Hello {user_obj.username}, thanks for choosing our services. Please check your email inbox and "
                 f"click on the link to confirm your email"
     }
 
 
+template = Jinja2Templates(directory="templates")
+
+
 @app.get('/verification', response_class=HTMLResponse)
 async def email_verification(request: Request, token: str):
-    user = await verify_token(token)
+    result = await verify_token(token)
 
-    if user and not user.is_verified:
-        user.is_verified = True
-        await user.save()
-register_tortoise(
-    app,
-    db_url="postgres://postgres:admin@localhost:5432/autopm_db",
-    modules={"models": ["models"]},
-    generate_schemas=True,
-    add_exception_handlers=True
-)
+    if result['user'] and not result['user'].is_verified:
+        result['user'].is_verified = True
+        result['session'].commit()
+        return template.TemplateResponse("email_verification.html",
+                                         {"request": request, "username": result['user'].username})
