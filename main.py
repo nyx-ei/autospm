@@ -27,11 +27,6 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-@app.get('/')
-def index():
-    return {"message": "Hellooooo"}
-
-
 # Route to register a user.
 @app.post('/registration')
 async def create_user(user: UserValidation, db: db_dependency):
