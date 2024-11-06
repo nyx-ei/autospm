@@ -1,22 +1,8 @@
-from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
-from dotenv import dotenv_values
+from fastapi_mail import FastMail, MessageSchema, MessageType
 from typing import List
 from models_validators.models import User
 import config
 import jwt
-import os
-
-config_credentials = dotenv_values(os.environ["ENV_PATH"])
-conf = ConnectionConfig(
-    MAIL_USERNAME=config_credentials['MAIL'],
-    MAIL_PASSWORD=config_credentials["PASSWORD"],
-    MAIL_FROM=config_credentials["MAIL"],
-    MAIL_PORT=465,
-    MAIL_SERVER="smtp.gmail.com",
-    MAIL_STARTTLS=False,
-    MAIL_SSL_TLS=True,
-    USE_CREDENTIALS=True,
-)
 
 
 async def send_email(email: List, instance: User):
@@ -51,5 +37,5 @@ async def send_email(email: List, instance: User):
         subtype=MessageType.html
     )
 
-    fm = FastMail(conf)
+    fm = FastMail(config.conf)
     await fm.send_message(message=message)
