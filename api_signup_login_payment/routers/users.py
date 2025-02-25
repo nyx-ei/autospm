@@ -17,6 +17,7 @@ from config import VERIFICATION_EMAIL_SUBJECT, VERIFICATION_MSG, OTP_MSG, OTP_EM
 router = APIRouter()
 template = Jinja2Templates(directory="templates")
 
+
 #############################################################################
 #                    ENDPOINTS(ROUTES) FUNCTIONS                            #
 #############################################################################
@@ -40,20 +41,17 @@ async def create_user(user: UserValidation, db: Annotated[Session, Depends(get_d
         date_of_birth=user.date_of_birth,
         phone_number=user.phone_number,
         address=user.address,
-        is_verified=False
+        is_verified=user.is_verified
     )
     db.add(user_obj)
     db.commit()
+    db.refresh(user_obj)
 
     # Send confirmation email
-    token = await create_access_token(data={'username': user_obj.username})
+    token = create_access_token(data={'username': user_obj.username})
     await send_email([user_obj.email], VERIFICATION_MSG, token, VERIFICATION_EMAIL_SUBJECT)
 
-    return {
-        "status": "Ok",
-        "data": f"Hello {user_obj.username}, thanks for choosing our services. Please check your email inbox and "
-        f"click on the link to confirm your email"
-    }
+    return {'token': token, 'user': UserValidation(**user_obj.__dict__)}
 
 
 @router.get('/verification', response_class=HTMLResponse)
@@ -80,7 +78,7 @@ async def login_for_access_token(db: Annotated[Session, Depends(get_db)],
 
     curr_otp_secret = pyotp.random_base32()
     payload = {'username': user.username, 'otp_secret': curr_otp_secret}
-    token = await create_access_token(payload)
+    token = create_access_token(payload)
 
     otp = pyotp.TOTP(curr_otp_secret, interval=300)
     otp_code = otp.now()

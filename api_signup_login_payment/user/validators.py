@@ -1,6 +1,6 @@
 import re
 from pydantic import BaseModel, EmailStr, Field, field_validator
-from datetime import date, datetime
+from datetime import date
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated="auto")
@@ -15,6 +15,7 @@ class UserValidation(BaseModel):
     date_of_birth: date
     phone_number: str
     address: str
+    is_verified: bool = False
 
     def hashed_pwd(self) -> str:
         return pwd_context.hash(self.password)
@@ -41,9 +42,3 @@ class Credentials(BaseModel):
         return pwd_context.verify(self.password, hashed_password)
 
 
-class CaptchaValidator(BaseModel):
-    captcha_id: int
-    captcha_text: str
-    captcha_image: bytes
-    created_at: datetime
-    expired_at: datetime
