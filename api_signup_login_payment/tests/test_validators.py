@@ -4,10 +4,10 @@ from datetime import date
 from pydantic import ValidationError
 
 
-@pytest.fixture
-def user() -> UserValidation:
-    """Pytest fixture to create a User instance for testing."""
-    return UserValidation(
+
+def test_user_validation_creation() -> None:
+    """Test the creation of user pydantic for validation."""
+    user = UserValidation(
         username="Germinal",
         email="germinal@gmail.com",
         password="Germinal@0099",
@@ -17,19 +17,6 @@ def user() -> UserValidation:
         phone_number="+237677448877",
         address="Mvog-ada Yaounde"
     )
-
-
-@pytest.fixture
-def cred() -> Credentials:
-    """Pytest fixture to create a Credentials instance for testing."""
-    return Credentials(
-        username="Germinal",
-        password="Germinal@0099"
-    )
-
-
-def test_user_validation_creation(user: UserValidation) -> None:
-    """Test the creation of user pydantic for validation."""
     assert user.username == "Germinal"
     assert user.email == "germinal@gmail.com"
     assert user.password == "Germinal@0099"
