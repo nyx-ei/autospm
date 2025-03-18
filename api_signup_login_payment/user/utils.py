@@ -1,6 +1,5 @@
 from fastapi import HTTPException
 from fastapi_mail import FastMail, MessageSchema, MessageType
-from fastapi_mail.errors import ConnectionErrors
 from typing import List
 from datetime import timedelta, datetime
 import config
@@ -31,5 +30,5 @@ async def send_email(email: List, body_msg: str, message_data: str, subject: str
     fm = FastMail(config.conf)
     try:
         await fm.send_message(message=message)
-    except ConnectionErrors as e:
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
