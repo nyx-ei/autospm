@@ -1,0 +1,16 @@
+asyncpg==0.29.0
+bcrypt==4.2.0
+fastapi~=0.115.0
+pydantic~=2.9.2
+PyJWT~=2.9.0
+python-dotenv~=1.0.1
+passlib~=1.7.4
+uvicorn==0.30.6
+pylint
+sqlalchemy>=2.0.0
+httpx
+pyotp~=2.9.0
+pytest~=8.3.4
+pytest-asyncio~=0.25.3
+fastapi-mail==1.4.1
+python-multipart~=0.0.17
