@@ -22,7 +22,12 @@ async def get_user(db: Annotated[Session, Depends(get_db)], username: str) -> Us
     return db.scalar(select(User).where(User.username == username))
 
 
-async def verify_user_credentials(credentials: Credentials, db_session: Annotated[Session, Depends(get_db)]) -> User or bool:
+async def get_user_with_email(db: Annotated[Session, Depends(get_db)], email: str) -> User:
+    return db.scalar(select(User).where(User.email == email))
+
+
+async def verify_user_credentials(credentials: Credentials,
+                                  db_session: Annotated[Session, Depends(get_db)]) -> User or bool:
     user = await get_user(db_session, credentials.username)
     if not user:
         return False

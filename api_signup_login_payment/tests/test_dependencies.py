@@ -6,7 +6,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from user.models import User
 from user.validators import Credentials
-from user.dependencies import verify_token_email, get_user, authenticate_user, otp_checker, get_current_user
+from user.dependencies import verify_token_email, get_user, verify_user_credentials, otp_checker, get_current_user
 
 
 @pytest.fixture
@@ -89,28 +89,28 @@ async def test_get_user(db_session, user: User):
 
 
 @pytest.mark.asyncio
-async def test_authenticate_user_success(db_session, credentials):
+async def test_verify_user_credentials_success(db_session, credentials):
     user = User(username="Mart", password="hashed_password")
 
     # Mock the get_user function to return the user
     with patch("user.dependencies.get_user", return_value=user):
-        result = await authenticate_user(credentials, db_session)
+        result = await verify_user_credentials(credentials, db_session)
 
         assert result == user
         credentials.verify_pwd.assert_called_once_with(user.password)
 
 
 @pytest.mark.asyncio
-async def test_authenticate_user_no_user(db_session, credentials):
+async def test_verify_user_credentials_no_user(db_session, credentials):
     # Mock the get_user function to return None
     with patch("user.dependencies.get_user", return_value=None):
-        result = await authenticate_user(credentials, db_session)
+        result = await verify_user_credentials(credentials, db_session)
 
         assert result is False
 
 
 @pytest.mark.asyncio
-async def test_authenticate_user_invalid_password(db_session, credentials):
+async def test_verify_user_credentials_invalid_password(db_session, credentials):
     user = User(username="Mart", password="hashed_password")
 
     # Mock the get_user function to return the user
@@ -118,7 +118,7 @@ async def test_authenticate_user_invalid_password(db_session, credentials):
         # Mock the verify_pwd method to return False
         credentials.verify_pwd.return_value = False
 
-        result = await authenticate_user(credentials, db_session)
+        result = await verify_user_credentials(credentials, db_session)
 
         assert result is False
         credentials.verify_pwd.assert_called_once_with(user.password)

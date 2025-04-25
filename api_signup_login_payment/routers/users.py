@@ -10,7 +10,7 @@ import pyotp
 from user.validators import UserValidation, Credentials
 from user.models import User
 from database import get_db
-from user.dependencies import verify_token_email, get_user, authenticate_user, get_current_user
+from user.dependencies import verify_token_email, get_user, verify_user_credentials, get_current_user
 from user.utils import send_email, create_access_token
 from config import VERIFICATION_EMAIL_SUBJECT, VERIFICATION_MSG, OTP_MSG, OTP_EMAIL_SUBJECT
 
@@ -68,7 +68,7 @@ async def email_verification(request: Request, token: str, db: Annotated[Session
 @router.post('/token')
 async def login_for_access_token(db: Annotated[Session, Depends(get_db)],
                                  form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
-    user = await authenticate_user(Credentials(username=form_data.username, password=form_data.password), db)
+    user = await verify_user_credentials(Credentials(username=form_data.username, password=form_data.password), db)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

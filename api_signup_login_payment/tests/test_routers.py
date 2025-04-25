@@ -91,8 +91,8 @@ async def test_login_for_access_token_success(user, credentials):
     token = "access_token"
     otp_code = "123456"
 
-    # Mock the authenticate_user function to return the user
-    with patch("user.dependencies.authenticate_user", return_value=user):
+    # Mock the verify_user_credentials function to return the user
+    with patch("user.dependencies.verify_user_credentials", return_value=user):
         # Mock the create_access_token function to return a token
         with patch("user.utils.create_access_token", return_value=token):
             # Mock the pyotp.TOTP.now method to return an OTP code
